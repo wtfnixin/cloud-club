@@ -210,3 +210,23 @@ nav ul {
   color: #7b57ff;
   font-size: 1.8vw;
 }
+
+/* In style.css */
+
+#spectator-info {
+  text-align: center;
+  font-weight: bold;
+  font-family: sans-serif;
+  color: #d35400;
+  background-color: #fdebd0;
+  border: 1px solid #d35400;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 8px;
+}
+
+/* This class will be added via JS to disable clicks for spectators */
+.spectating .box, .spectating #answers button {
+  pointer-events: none;
+  cursor: not-allowed;
+}
