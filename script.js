@@ -1,6 +1,4 @@
-// --- script.js ---
 
-// --- Audio and Firebase Configuration ---
 let audioTurn = new Audio("pop.mp3");
 let gameover = new Audio("gameover.mp3");
 let drawAudio = new Audio("amongus.mp3");
@@ -18,7 +16,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
-// --- Global Variables ---
 let gameId, playerSymbol, isSpectator = false;
 let questionTimer, moveTimer;
 let isTimerRunning = { question: false, move: false };
@@ -28,7 +25,6 @@ const questions = [
     { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Jupiter"], correct: "Mars" },
 ];
 
-// --- Core Game Initialization ---
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     gameId = urlParams.get('gameId');
@@ -82,7 +78,7 @@ function updateGame(snapshot) {
     if (playerSymbol === 'O' && game.status === 'waiting' && !game.players.O) {
         database.ref('games/' + gameId).update({
             'players/O': true,
-            'status': 'active' // This signals the game to start
+            'status': 'active'
         });
     }
 
