@@ -223,3 +223,65 @@ nav ul {
   pointer-events: none;
   cursor: not-allowed;
 }
+
+.modal-overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); 
+  z-index: 10; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-card {
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  font-family: sans-serif;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-card h3 {
+  margin-top: 0;
+  font-size: 1.8em;
+  color: #333;
+}
+
+.modal-card p {
+  font-size: 1.1em;
+  color: #555;
+}
+
+.game-code {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #7b57ff;
+  background-color: #eef2f3;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  letter-spacing: 4px;
+  border: 2px dashed #ccc;
+}
+
+#startGameButton {
+  padding: 12px 25px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: #7b57ff;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+#startGameButton:hover {
+  background-color: #9173ff;
+}

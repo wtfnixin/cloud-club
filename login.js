@@ -1,4 +1,4 @@
-// --- login.js (with dedicated Spectate Button logic) ---
+// --- login.js (Final Version with Popup Card) ---
 
 const firebaseConfig = {
   apiKey: "AIzaSyDftwuUAkK6alqJWRh2YkokVk3G_-TN9i4",
@@ -10,19 +10,30 @@ const firebaseConfig = {
   appId: "1:267681007927:web:86cd3bbf5e2498314332b2"
 };
 
-// Initialize Firebase for this page to check if a room exists
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 document.getElementById("createGame").addEventListener("click", createGame);
 document.getElementById("joinGame").addEventListener("click", joinGame);
-// Add event listener for our new button
 document.getElementById("spectateGame").addEventListener("click", spectateGame);
 
 function createGame() {
     const gameId = Math.random().toString(36).substr(2, 5).toUpperCase();
-    alert(`Your Game Room Code is: ${gameId}\n\nShare this code with a friend to play!`);
-    window.location.href = `index.html?gameId=${gameId}&player=X`;
+    const playerSymbol = "X";
+
+    database.ref('games/' + gameId).set({
+        board: Array(9).fill(""),
+        turn: "",
+        players: { "X": true },
+        status: "waiting",
+        question: null,
+        winner: null,
+        draw: false,
+        answers: null
+    });
+    
+    // Show the custom popup card instead of an alert
+    showGameIdPopup(gameId, playerSymbol);
 }
 
 function joinGame() {
@@ -31,27 +42,40 @@ function joinGame() {
         alert("Please enter a Game ID.");
         return;
     }
-    // The game page will handle the logic of joining as Player O
     window.location.href = `index.html?gameId=${gameId}&player=O`;
 }
 
-// This new function handles the spectate button click
 function spectateGame() {
     const gameId = document.getElementById("gameIdInput").value.toUpperCase();
     if (!gameId) {
         alert("Please enter a Game ID to spectate.");
         return;
     }
-
-    // Check Firebase to make sure the game room exists before redirecting
     const gameRef = database.ref('games/' + gameId);
     gameRef.once('value', (snapshot) => {
         if (snapshot.exists()) {
-            // The room exists, so we can redirect as a spectator
             window.location.href = `index.html?gameId=${gameId}&player=Spectator`;
         } else {
-            // The room does not exist
             alert("Game not found! Please check the code.");
         }
     });
+}
+
+// This is the new function that shows the popup
+function showGameIdPopup(gameId, playerSymbol) {
+    // Get the HTML elements
+    const modal = document.getElementById('gameIdModal');
+    const gameIdDisplay = document.getElementById('gameIdDisplay');
+    const startGameButton = document.getElementById('startGameButton');
+    
+    // Set the game code in the popup
+    gameIdDisplay.innerText = gameId;
+    
+    // Show the popup
+    modal.style.display = 'flex';
+    
+    // When the "Let's Go!" button is clicked, go to the game page
+    startGameButton.onclick = () => {
+        window.location.href = `index.html?gameId=${gameId}&player=${playerSymbol}`;
+    };
 }
