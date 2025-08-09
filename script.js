@@ -1,3 +1,4 @@
+// --- script.js (Final Version with All Bugs Fixed) ---
 
 let audioTurn = new Audio("pop.mp3");
 let gameover = new Audio("gameover.mp3");
@@ -30,109 +31,165 @@ window.onload = function() {
     gameId = urlParams.get('gameId');
     playerSymbol = urlParams.get('player');
 
-    if (!gameId || !playerSymbol) {
-        window.location.href = 'login.html'; // Go back if details are missing
-        return;
-    }
+    if (!gameId || !playerSymbol) { window.location.href = 'login.html'; return; }
 
     isSpectator = playerSymbol === 'Spectator';
     const gameRef = database.ref('games/' + gameId);
 
-    // --- SETUP LOGIC ---
-    if (playerSymbol === 'X') {
-        // Player X (the creator) sets up the game room in Firebase.
-        createGameRoom();
+    if (isSpectator) {
+        document.getElementById('spectator-info').style.display = 'block';
+        document.querySelector('.gamecontainer').classList.add('spectating');
+        document.getElementById('reset').style.display = 'none';
     }
 
-    if (isSpectator) {
-        setupSpectatorUI();
+    if (playerSymbol === 'X') {
+        gameRef.once('value', snapshot => { if (!snapshot.exists()) createGameRoom(); });
     }
     
-    // Everyone starts listening for game data.
     gameRef.on('value', updateGame);
 };
 
 function createGameRoom() {
     database.ref('games/' + gameId).set({
-        board: Array(9).fill(""),
-        turn: "",
-        players: { "X": true },
-        status: "waiting", // Game starts in 'waiting' state
-        question: null,
-        winner: null,
-        draw: false
+        board: Array(9).fill(""), turn: "", players: { "X": true },
+        status: "waiting", question: null, winner: null, draw: false,
+        answers: null
     });
 }
 
-// --- Main Game Update Function ---
-function updateGame(snapshot) {
-    const game = snapshot.val();
-    
-    // If game data doesn't exist yet, Player O and Spectators will wait.
-    if (!game) {
-        document.querySelector('.info').innerText = `Waiting for host to create game: ${gameId}...`;
-        return;
-    }
+function joinGameRoom() {
+    database.ref('games/' + gameId).update({ 'players/O': true, 'status': 'active' });
+}
 
-    // Player O joins the game when they see the "waiting" status.
-    if (playerSymbol === 'O' && game.status === 'waiting' && !game.players.O) {
+function nextQuestion() {
+    if (playerSymbol === 'X') {
+        const questionIndex = Math.floor(Math.random() * questions.length);
         database.ref('games/' + gameId).update({
-            'players/O': true,
-            'status': 'active'
+            question: questions[questionIndex],
+            turn: "",
+            answers: null
         });
     }
+}
 
-    // If game was reset, clear local timers
-    if (!game.question && !game.turn) {
-        clearInterval(questionTimer);
-        clearInterval(moveTimer);
+function updateGame(snapshot) {
+    const game = snapshot.val();
+    if (!game) { document.querySelector('.info').innerText = `Waiting for host...`; return; }
+
+    if (playerSymbol === 'O' && game.status === 'waiting' && !game.players.O) {
+        joinGameRoom();
     }
     
-    // Show waiting message if game is not active yet
+    if (game.answers && game.answers.X === 'wrong' && game.answers.O === 'wrong') {
+        if (playerSymbol === 'X') {
+            setTimeout(() => {
+                database.ref('games/' + gameId).update({ question: null, turn: "", answers: null });
+            }, 1500);
+        }
+    }
+    
+    // --- TIMER MANAGEMENT ---
+    if (game.question && !isTimerRunning.question) { startQuestionTimer(); }
+    if (!game.question) { clearInterval(questionTimer); isTimerRunning.question = false; document.getElementById("question-timer-container").style.display = "none"; }
+    
+    if (game.turn && !isTimerRunning.move) { startMoveTimer(game.turn); }
+    if (!game.turn) { clearInterval(moveTimer); isTimerRunning.move = false; document.getElementById("move-timer-container").style.display = "none"; }
+
     if (game.status === 'waiting' && !isSpectator) {
         document.querySelector('.info').innerText = `Waiting for Player O to join...`;
         return;
     }
     
-    // Player X starts the next question round
     if (game.status === 'active' && !game.question && !game.turn && !game.winner && !game.draw && playerSymbol === 'X') {
         setTimeout(nextQuestion, 1500);
     }
 
-    // Update timers and the rest of the UI
-    handleTimers(game);
     updateBoardUI(game);
 }
 
+// *** THIS FUNCTION CONTAINS THE FIX ***
+function handleAnswer(answer, correctAnswer) {
+    const gameRef = database.ref('games/' + gameId);
+    gameRef.once('value', snapshot => {
+        const game = snapshot.val();
+        // Check if a question is active AND this player has NOT already answered
+        if (game.question && (!game.answers || !game.answers[playerSymbol])) {
+            if (answer === correctAnswer) {
+                // Correct answer! Stop the question timer for everyone and set the turn.
+                clearInterval(questionTimer);
+                isTimerRunning.question = false;
+                gameRef.update({ turn: playerSymbol, question: null, answers: null });
+            } else {
+                // Wrong answer! Mark this player as having answered wrong.
+                // The question timer CONTINUES for the other player.
+                alert("Wrong answer!");
+                let playerAnswerUpdate = {};
+                playerAnswerUpdate['answers/' + playerSymbol] = 'wrong';
+                gameRef.update(playerAnswerUpdate);
+            }
+        }
+    });
+}
 
-// --- All other functions ---
-function nextQuestion() { /* ... same as before ... */
-    if (playerSymbol === 'X') { const questionIndex = Math.floor(Math.random() * questions.length); database.ref('games/' + gameId).update({ question: questions[questionIndex], turn: "" }); }
+
+function updateBoardUI(game) {
+    const boxtexts = document.getElementsByClassName("boxtext");
+    Array.from(boxtexts).forEach((box, i) => box.innerText = game.board[i] || "");
+    const info = document.querySelector(".info");
+    document.querySelector(".imgbox").classList.remove("show");
+    document.querySelector(".draw-imgbox").classList.remove("show");
+    
+    if (game.winner) {
+        info.innerText = game.winner + " Won!"; if (!isSpectator) gameover.play();
+        document.querySelector(".imgbox").classList.add("show");
+    } else if (game.draw) {
+        info.innerText = "It's a Draw!"; if (!isSpectator) drawAudio.play();
+        document.querySelector(".draw-imgbox").classList.add("show");
+    } else if (game.turn) {
+        info.innerText = `Player ${game.turn} has 5 seconds to move!`;
+    } else if (game.question) {
+        info.innerText = "First to answer gets a turn!";
+    } else if (game.status === 'active') {
+        info.innerText = "Waiting for the next question...";
+    }
+
+    if (game.question) { displayQuestion(game.question, game.answers); } 
+    else { document.getElementById("quiz-container").style.display = "none"; }
 }
-function setupSpectatorUI() { /* ... same as before ... */
-    document.getElementById('spectator-info').style.display = 'block';
-    document.querySelector('.gamecontainer').classList.add('spectating');
-    document.getElementById('reset').style.display = 'none';
+
+function displayQuestion(q, gameAnswers) {
+    const quizContainer = document.getElementById("quiz-container");
+    quizContainer.style.display = "block";
+    document.getElementById("question").innerText = q.question;
+    const answersDiv = document.getElementById("answers");
+    answersDiv.innerHTML = "";
+    
+    const playerHasAnswered = gameAnswers && gameAnswers[playerSymbol];
+
+    q.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerText = answer;
+        if (playerHasAnswered || isSpectator) {
+            button.disabled = true;
+        } else {
+            button.onclick = () => handleAnswer(answer, q.correct);
+        }
+        answersDiv.appendChild(button);
+    });
 }
-function handleTimers(game) { /* ... same as before ... */
-    clearInterval(questionTimer); clearInterval(moveTimer);
-    document.getElementById("question-timer-container").style.display = "none";
-    document.getElementById("move-timer-container").style.display = "none";
-    isTimerRunning = { question: false, move: false };
-    if (game.question && !game.winner && !game.draw) { startQuestionTimer(); } 
-    else if (game.turn && !game.winner && !game.draw) { startMoveTimer(game.turn); }
-}
-function startQuestionTimer() { /* ... same as before ... */
+
+// --- No changes needed for the functions below this line ---
+function startQuestionTimer() {
     isTimerRunning.question = true; let timeLeft = 10;
     const timerDisplay = document.getElementById("question-time");
     timerDisplay.innerText = timeLeft;
     document.getElementById("question-timer-container").style.display = "block";
     questionTimer = setInterval(() => {
         timeLeft--; timerDisplay.innerText = timeLeft;
-        if (timeLeft <= 0) { clearInterval(questionTimer); if (playerSymbol === 'X') { database.ref('games/' + gameId).update({ question: null, turn: "" }); } }
+        if (timeLeft <= 0) { clearInterval(questionTimer); if (playerSymbol === 'X') { database.ref('games/' + gameId).update({ question: null, turn: "", answers: null }); } }
     }, 1000);
 }
-function startMoveTimer(playerWhoAnswered) { /* ... same as before ... */
+function startMoveTimer(playerWhoAnswered) {
     isTimerRunning.move = true; let timeLeft = 5;
     const timerDisplay = document.getElementById("move-time");
     timerDisplay.innerText = timeLeft;
@@ -142,39 +199,7 @@ function startMoveTimer(playerWhoAnswered) { /* ... same as before ... */
         if (timeLeft <= 0) { clearInterval(moveTimer); if (playerSymbol === playerWhoAnswered) { database.ref('games/' + gameId).update({ turn: "" }); } }
     }, 1000);
 }
-function updateBoardUI(game) { /* ... same as before ... */
-    Array.from(document.getElementsByClassName("boxtext")).forEach((box, i) => box.innerText = game.board[i] || "");
-    const info = document.querySelector(".info");
-    document.querySelector(".imgbox").classList.remove("show"); document.querySelector(".draw-imgbox").classList.remove("show");
-    if (game.winner) { info.innerText = game.winner + " Won!"; if (!isSpectator) gameover.play(); document.querySelector(".imgbox").classList.add("show"); } 
-    else if (game.draw) { info.innerText = "It's a Draw!"; if (!isSpectator) drawAudio.play(); document.querySelector(".draw-imgbox").classList.add("show"); } 
-    else if (game.turn) { info.innerText = `Player ${game.turn} has 5 seconds to move!`; } 
-    else if (game.question) { info.innerText = "First to answer gets a turn!"; } 
-    else if (game.status === 'active') { info.innerText = "Waiting for the next question..."; }
-    if (game.question) { displayQuestion(game.question); } 
-    else { document.getElementById("quiz-container").style.display = "none"; }
-}
-function displayQuestion(q) { /* ... same as before ... */
-    const quizContainer = document.getElementById("quiz-container");
-    quizContainer.style.display = "block"; document.getElementById("question").innerText = q.question;
-    const answersDiv = document.getElementById("answers"); answersDiv.innerHTML = "";
-    q.answers.forEach(answer => {
-        const button = document.createElement("button"); button.innerText = answer;
-        if (!isSpectator) { button.onclick = () => handleAnswer(answer, q.correct); }
-        answersDiv.appendChild(button);
-    });
-}
-function handleAnswer(answer, correctAnswer) { /* ... same as before ... */
-    const gameRef = database.ref('games/' + gameId);
-    gameRef.once('value', snapshot => {
-        if (snapshot.val().question) {
-            clearInterval(questionTimer);
-            if (answer === correctAnswer) { gameRef.update({ turn: playerSymbol, question: null }); } 
-            else { alert("Wrong answer!"); document.querySelectorAll('#answers button').forEach(button => button.disabled = true); }
-        }
-    });
-}
-Array.from(document.getElementsByClassName("box")).forEach((element, i) => { /* ... same as before ... */
+Array.from(document.getElementsByClassName("box")).forEach((element, i) => {
     element.addEventListener("click", () => {
         if (isSpectator) return;
         database.ref('games/' + gameId).once('value', snapshot => {
@@ -187,7 +212,7 @@ Array.from(document.getElementsByClassName("box")).forEach((element, i) => { /* 
         });
     });
 });
-function checkWinAndDrawAndUpdate() { /* ... same as before ... */
+function checkWinAndDrawAndUpdate() {
     database.ref('games/' + gameId).once('value', snapshot => {
         const game = snapshot.val(); let isWin = false, isDraw = false;
         const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
@@ -200,10 +225,10 @@ function checkWinAndDrawAndUpdate() { /* ... same as before ... */
         if (!isWin && !isDraw) { database.ref('games/' + gameId).update({ turn: "" }); }
     });
 }
-document.getElementById("reset").addEventListener("click", () => { /* ... same as before ... */
-    if (gameId && playerSymbol === "X") {
+document.getElementById("reset").addEventListener("click", () => {
+    if (gameId && playerSymbol === 'X') {
         database.ref('games/' + gameId).update({
-            board: Array(9).fill(""), turn: "", question: null, winner: null, draw: false
+            board: Array(9).fill(""), turn: "", question: null, winner: null, draw: false, answers: null
         });
     } else if (!isSpectator) { alert("Only the host (Player X) can reset the game."); }
 });
