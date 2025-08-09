@@ -324,7 +324,6 @@ nav ul {
   border-color: #f5c6cb;  
 }
 
-/* Spectator Answer Containers */
 .spectator-answer-container {
   margin-bottom: 6px;
   border: 1px solid #ddd;
@@ -375,7 +374,6 @@ nav ul {
   color: #7f8c8d;
 }
 
-/* Ensure quiz container doesn't overflow */
 #quiz-container {
   margin-top: 10px;
   padding: 12px;
@@ -389,13 +387,10 @@ nav ul {
   overflow-y: auto;
 }
 
-/* In style.css */
-
-/* This targets the new Start Game button */
 #startGameBtn {
-  width: 120px; /* A bit wider for the text */
+  width: 120px;
   height: 40px;
-  background-color: #2ecc71; /* Green color for Start */
+  background-color: #2ecc71;
   border: none;
   color: white;
   cursor: pointer;
@@ -413,12 +408,11 @@ nav ul {
 }
 
 #startGameBtn:disabled {
-  background-color: #95a5a6; /* Grey when disabled */
+  background-color: #95a5a6;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-/* Styling for the countdown message */
 #countdown-message {
   font-size: 1.8em;
   font-family: sans-serif;
@@ -426,5 +420,5 @@ nav ul {
   color: #34495e;
   text-align: center;
   margin-top: 20px;
-  height: 30px; /* Reserve space to prevent layout shift */
+  height: 30px;
 }

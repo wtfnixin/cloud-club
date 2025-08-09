@@ -1,4 +1,3 @@
-// --- login.js ---
 const firebaseConfig = {
   apiKey: "AIzaSyDftwuUAkK6alqJWRh2YkokVk3G_-TN9i4",
   authDomain: "tic-tac-toe-cloud-41e2b.firebaseapp.com",

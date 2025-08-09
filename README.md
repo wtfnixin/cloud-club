@@ -1,31 +1,27 @@
-# 🎯 Multiplayer Quiz Tic-Tac-Toe
+# Multiplayer Quiz Tic-Tac-Toe
 
-A revolutionary twist on the classic Tic-Tac-Toe game! This real-time multiplayer game combines trivia questions with strategic gameplay, where players must answer quiz questions correctly to earn their turns on the board.
+A real-time multiplayer game that combines trivia questions with classic Tic-Tac-Toe strategy. Players must answer quiz questions correctly to earn their turns on the board.
 
-## 🌟 Key Features
+## Key Features
 
-### 🎮 Unique Gameplay Mechanics
+### Unique Gameplay Mechanics
 - **Quiz-Based Turns**: Players compete to answer trivia questions first to earn the right to place their symbol
 - **Timed Challenges**: 10-second timer for answering questions, 5-second timer for making moves
 - **Real-Time Competition**: First player to answer correctly gets the turn
 
-### 🌐 Multiplayer Experience
+### Multiplayer Experience
 - **Real-Time Synchronization**: Powered by Firebase Realtime Database
 - **Room-Based Games**: Create or join games using unique room codes
-- **Spectator Mode**: Watch ongoing games without participating
+- **Enhanced Spectator Mode**: Watch games with real-time player choice tracking
 - **Cross-Device Compatible**: Play with friends across different devices
+- **Secure Room Management**: 2-player limit with URL manipulation protection
 
-### 🎨 Rich Media Experience
-- **Dynamic Sound Effects**: 
-  - Pop sound for moves
-  - Victory fanfare for wins
-  - Special draw sound (Among Us theme)
-- **Animated Celebrations**:
-  - Shin-chan GIF for victories
-  - Dog meme GIF for draws
-- **Modern UI**: Glassmorphism design with smooth animations
+### Rich Media Experience
+- **Dynamic Sound Effects**: Pop sounds for moves, victory fanfare, and draw sounds
+- **Animated Celebrations**: Victory and draw animations with custom GIFs
+- **Modern UI**: Clean design with smooth animations and responsive layout
 
-## 🎯 How to Play
+## How to Play
 
 ### Game Flow
 1. **Join a Game**: Create a new room or join an existing one with a room code
@@ -36,14 +32,14 @@ A revolutionary twist on the classic Tic-Tac-Toe game! This real-time multiplaye
 ### Player Roles
 - **Player X (Host)**: Creates the game room and manages question flow
 - **Player O (Guest)**: Joins using the room code
-- **Spectator**: Watches the game without participating
+- **Spectator**: Watches the game with enhanced view of both players' answer choices
 
 ### Timing System
-- **Question Timer**: 10 seconds to answer trivia questions
+- **Question Timer**: 10 seconds to answer trivia questions (continues on wrong answers)
 - **Move Timer**: 5 seconds to place your symbol after answering correctly
-- **Auto-Skip**: Timers automatically advance the game if time runs out
+- **Smart Timer Management**: Timers don't reset unexpectedly during gameplay
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Modern web browser with JavaScript enabled
@@ -71,20 +67,20 @@ prototype-tictac/
 └── tumblr_60c9c5fc9a0f7f9fb2a52e5e938d798a_c5aff1db_250.gif
 ```
 
-## 🛠️ Technical Architecture
+## Technical Architecture
 
 ### Technologies Used
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **Backend**: Firebase Realtime Database
-- **Styling**: Custom CSS with glassmorphism effects
+- **Styling**: Custom CSS with modern design principles
 - **Fonts**: Adobe Fonts (Aboreto family)
 - **Audio**: HTML5 Audio API
 
-### Firebase Integration
-- **Real-time synchronization** of game state
-- **Room-based architecture** for multiplayer sessions
-- **Automatic cleanup** of game data
-- **Cross-platform compatibility**
+### Security Features
+- **Room Capacity Limits**: Strict 2-player enforcement
+- **URL Manipulation Protection**: Server-side validation prevents unauthorized access
+- **Player Slot Validation**: Prevents duplicate players and unauthorized joins
+- **Real-time State Validation**: Continuous game state verification
 
 ### Game State Management
 ```javascript
@@ -93,20 +89,36 @@ prototype-tictac/
   board: Array(9),           // Game board state
   turn: String,              // Current player's turn
   players: Object,           // Connected players
-  status: String,            // Game status (waiting/active)
+  status: String,            // Game status (waiting/active/inprogress)
   question: Object,          // Current question data
   winner: String,            // Winner symbol
-  draw: Boolean              // Draw state
+  draw: Boolean,             // Draw state
+  answers: Object            // Player answer tracking
 }
 ```
 
-## 🎲 Quiz System
+## Enhanced Spectator Mode
+
+### Features
+- **Real-time Player Choice Tracking**: See both players' answer selections instantly
+- **Compact Layout**: All answer options visible simultaneously
+- **Visual Indicators**: Clear marking of chosen vs unchosen answers
+- **Professional Styling**: Clean, modern interface optimized for viewing
+
+### Spectator View
+Spectators can see:
+- Current question and all answer options
+- Which player chose which answer in real-time
+- Game board updates and player moves
+- Timer countdowns and game status
+
+## Quiz System
 
 ### Question Categories
 Currently includes general knowledge questions covering:
 - Geography (capitals, countries)
 - Science (planets, basic facts)
-- *Easily expandable for more categories*
+- Easily expandable for more categories
 
 ### Adding New Questions
 Questions are stored in the `questions` array in `script.js`:
@@ -121,19 +133,19 @@ const questions = [
 ];
 ```
 
-## 🎮 Game Modes
+## Game Modes
 
 ### Standard Multiplayer
 - Two players compete in real-time
 - Quiz questions determine turn order
 - First to three in a row wins
 
-### Spectator Mode
-- Watch ongoing games without participating
-- Perfect for tournaments or learning
-- Real-time updates without interaction ability
+### Enhanced Spectator Mode
+- Watch ongoing games with detailed player choice tracking
+- Perfect for tournaments, learning, or entertainment
+- Real-time updates with professional interface
 
-## 🔧 Customization Options
+## Customization Options
 
 ### Sound Effects
 Replace audio files with your own:
@@ -148,12 +160,12 @@ Replace GIF files for custom celebrations:
 
 ### Styling
 Modify `style.css` to customize:
-- Color schemes
-- Animations
+- Color schemes and themes
 - Layout and spacing
-- Font choices
+- Animations and transitions
+- Font choices and typography
 
-## 🌐 Browser Compatibility
+## Browser Compatibility
 
 ### Fully Supported
 - Chrome 80+
@@ -167,7 +179,7 @@ Modify `style.css` to customize:
 - Audio playback capability
 - Internet connection for multiplayer
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -186,48 +198,59 @@ Modify `style.css` to customize:
 - Check browser console for error messages
 - Ensure Firebase configuration is correct
 
-**Room Code Not Working**
+**Room Access Issues**
 - Verify the room code is entered correctly (case-sensitive)
+- Check if room is full (2-player limit)
 - Ensure the host has created the room
-- Try creating a new room
 
 ### Performance Tips
 - Close unnecessary browser tabs
 - Ensure stable internet connection
 - Use modern browsers for best performance
+- Clear browser cache if experiencing issues
 
-## 🚀 Future Enhancements
+## Recent Updates
+
+### Version 2.0 Features
+- **Fixed Timer System**: Timers no longer reset unexpectedly on wrong answers
+- **Enhanced Security**: Complete protection against URL manipulation
+- **Improved Spectator Mode**: Real-time player choice tracking with compact layout
+- **Better UX**: No-scroll page design with optimized positioning
+- **Clean Code**: Removed all CSS comments for production-ready code
+
+## Future Enhancements
 
 ### Planned Features
-- [ ] User accounts and profiles
-- [ ] Leaderboards and statistics
-- [ ] More question categories
-- [ ] Tournament mode
-- [ ] Mobile app version
-- [ ] Custom room settings
-- [ ] AI opponent mode
+- User accounts and profiles
+- Leaderboards and statistics
+- More question categories
+- Tournament mode
+- Mobile app version
+- Custom room settings
+- AI opponent mode
 
 ### Contributing
-This project is open for contributions! Ideas for improvements:
+This project is open for contributions. Ideas for improvements:
 - Additional question categories
 - New game modes
 - UI/UX enhancements
 - Performance optimizations
 - Mobile responsiveness improvements
 
-## 📄 License
+## License
 
 This project is open source and available under the MIT License.
 
-## 🎉 Credits
+## Credits
 
 - **Game Concept**: Innovative fusion of trivia and strategy
 - **Sound Effects**: Carefully selected for engaging gameplay
-- **Visual Design**: Modern glassmorphism aesthetic
+- **Visual Design**: Modern, clean aesthetic
 - **Firebase Integration**: Real-time multiplayer functionality
+- **Security Implementation**: Robust room management and access control
 
 ---
 
-**Ready to test your knowledge and strategy?** 🧠⚡
+**Ready to test your knowledge and strategy?**
 
 Start playing by opening `login.html` in your browser and challenge your friends to this unique gaming experience!
