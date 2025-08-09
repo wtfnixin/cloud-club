@@ -11,9 +11,7 @@
 </head>
 <body>
     <nav>
-        <ul>
-            <li>TIC TAC TOE</li>
-        </ul>
+        <ul><li>TIC TAC TOE</li></ul>
     </nav>
     <div class="gamecontainer">
         <div class="container">
@@ -27,34 +25,20 @@
             <div class="box bb-0"><span class="boxtext"></span></div>
             <div class="box bb-0 br-0"><span class="boxtext"></span></div>
         </div>
-
         <div class="gameInfo">
             <div>
                 <span class="info">Loading Game...</span>
-                <button id="reset">Reset</button>
+                <button id="startGameBtn" style="display: none;">Start Game</button>
             </div>
-            <div id="quiz-container" style="display:none;">
-                <h3 id="question">Question text will appear here.</h3>
-                <div id="answers">
-                    </div>
-            </div>
-
-            <div id="question-timer-container" style="display: none;">
-                Time to answer: <span id="question-time">10</span>
-            </div>
-            <div id="move-timer-container" style="display: none;">
-                Time to move: <span id="move-time">5</span>
-            </div>
-
-            <div id="spectator-info" style="display: none;">
-                👁️ You are spectating 👁️
-            </div>
-
+            <div id="countdown-message"></div>
+            <div id="spectator-info" style="display: none;">👁️ You are spectating 👁️</div>
             <div id="feedback-message"></div>
-
+            <div id="question-timer-container" style="display: none;">Time to answer: <span id="question-time">10</span></div>
+            <div id="move-timer-container" style="display: none;">Time to move: <span id="move-time">5</span></div>
             <div id="quiz-container" style="display:none;">
+                <h3 id="question"></h3>
+                <div id="answers"></div>
             </div>
-            
             <div class="imgbox">
                 <img src="shin-chan-kiss-my-ass.gif" >
             </div>
@@ -63,7 +47,6 @@
             </div>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

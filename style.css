@@ -318,3 +318,44 @@ nav ul {
   background-color: #f8d7da; 
   border-color: #f5c6cb;  
 }
+
+
+/* In style.css */
+
+/* This targets the new Start Game button */
+#startGameBtn {
+  width: 120px; /* A bit wider for the text */
+  height: 40px;
+  background-color: #2ecc71; /* Green color for Start */
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px #27ae60;
+  transition: all 0.3s ease;
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+#startGameBtn:hover {
+  background-color: #27ae60;
+  box-shadow: 0 10px 15px -3px #27ae60;
+}
+
+#startGameBtn:disabled {
+  background-color: #95a5a6; /* Grey when disabled */
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Styling for the countdown message */
+#countdown-message {
+  font-size: 1.8em;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: #34495e;
+  text-align: center;
+  margin-top: 20px;
+  height: 30px; /* Reserve space to prevent layout shift */
+}

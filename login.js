@@ -1,5 +1,4 @@
-// --- login.js (Final Version with Popup Card) ---
-
+// --- login.js ---
 const firebaseConfig = {
   apiKey: "AIzaSyDftwuUAkK6alqJWRh2YkokVk3G_-TN9i4",
   authDomain: "tic-tac-toe-cloud-41e2b.firebaseapp.com",
@@ -21,36 +20,20 @@ function createGame() {
     const gameId = Math.random().toString(36).substr(2, 5).toUpperCase();
     const playerSymbol = "X";
 
-    database.ref('games/' + gameId).set({
-        board: Array(9).fill(""),
-        turn: "",
-        players: { "X": true },
-        status: "waiting",
-        question: null,
-        winner: null,
-        draw: false,
-        answers: null
-    });
-    
-    // Show the custom popup card instead of an alert
+    // The game page will create the room, we just show the popup here
     showGameIdPopup(gameId, playerSymbol);
 }
 
 function joinGame() {
     const gameId = document.getElementById("gameIdInput").value.toUpperCase();
-    if (!gameId) {
-        alert("Please enter a Game ID.");
-        return;
-    }
+    if (!gameId) { alert("Please enter a Game ID."); return; }
     window.location.href = `index.html?gameId=${gameId}&player=O`;
 }
 
 function spectateGame() {
     const gameId = document.getElementById("gameIdInput").value.toUpperCase();
-    if (!gameId) {
-        alert("Please enter a Game ID to spectate.");
-        return;
-    }
+    if (!gameId) { alert("Please enter a Game ID to spectate."); return; }
+
     const gameRef = database.ref('games/' + gameId);
     gameRef.once('value', (snapshot) => {
         if (snapshot.exists()) {
@@ -61,20 +44,14 @@ function spectateGame() {
     });
 }
 
-// This is the new function that shows the popup
 function showGameIdPopup(gameId, playerSymbol) {
-    // Get the HTML elements
     const modal = document.getElementById('gameIdModal');
     const gameIdDisplay = document.getElementById('gameIdDisplay');
     const startGameButton = document.getElementById('startGameButton');
     
-    // Set the game code in the popup
     gameIdDisplay.innerText = gameId;
-    
-    // Show the popup
     modal.style.display = 'flex';
     
-    // When the "Let's Go!" button is clicked, go to the game page
     startGameButton.onclick = () => {
         window.location.href = `index.html?gameId=${gameId}&player=${playerSymbol}`;
     };
