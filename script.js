@@ -35,8 +35,58 @@ window.onload = () => {
     isSpectator = playerSymbol === 'Spectator';
     const gameRef = database.ref('games/' + gameId);
 
+    // Validate player access before proceeding
     if (playerSymbol === 'X') {
-        gameRef.once('value', snapshot => { if (!snapshot.exists()) createGameRoom(); });
+        gameRef.once('value', snapshot => { 
+            if (!snapshot.exists()) {
+                createGameRoom();
+            } else {
+                // Game exists, check if this player X is allowed
+                const game = snapshot.val();
+                if (game.players && game.players.X) {
+                    // Someone else is already Player X
+                    alert("Player X slot is already taken!");
+                    window.location.href = 'login.html';
+                    return;
+                }
+            }
+        });
+    } else if (playerSymbol === 'O') {
+        // Validate Player O access
+        gameRef.once('value', snapshot => {
+            if (!snapshot.exists()) {
+                alert("Game not found! Please check the code.");
+                window.location.href = 'login.html';
+                return;
+            }
+            const game = snapshot.val();
+            if (game.players && game.players.O) {
+                // Someone else is already Player O
+                alert("Player O slot is already taken!");
+                window.location.href = 'login.html';
+                return;
+            }
+            if (game.players && game.players.X && game.players.O) {
+                // Room is full
+                alert("Room is full! Only 2 players allowed.");
+                window.location.href = 'login.html';
+                return;
+            }
+        });
+    } else if (playerSymbol === 'Spectator') {
+        // Validate game exists for spectators
+        gameRef.once('value', snapshot => {
+            if (!snapshot.exists()) {
+                alert("Game not found! Please check the code.");
+                window.location.href = 'login.html';
+                return;
+            }
+        });
+    } else {
+        // Invalid player symbol
+        alert("Invalid player type!");
+        window.location.href = 'login.html';
+        return;
     }
     
     gameRef.on('value', updateGame);
@@ -54,12 +104,26 @@ function updateGame(snapshot) {
     const game = snapshot.val();
     if (!game) { document.querySelector('.info').innerText = `Waiting for host...`; return; }
 
+    // Check if room is full (both X and O players exist)
+    const roomIsFull = game.players && game.players.X && game.players.O;
+    
+    // If trying to join as O when room is not full
     if (playerSymbol === 'O' && game.status === 'waiting' && !game.players.O) {
         database.ref('games/' + gameId).update({ 'players/O': true, 'status': 'active' });
     }
+    // If trying to join but room is full and player is not already in the game
+    else if (roomIsFull && !game.players[playerSymbol] && playerSymbol !== 'Spectator') {
+        // Show room full message and redirect
+        document.querySelector('.info').innerText = `Room is full! Only 2 players allowed.`;
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 2000);
+        return;
+    }
     
     if (playerSymbol === 'X') {
-        const bothWrong = game.answers && game.answers.X === 'wrong' && game.answers.O === 'wrong';
+        const bothWrong = game.answers && game.answers.X && game.answers.O && 
+                          game.question && game.answers.X !== game.question.correct && game.answers.O !== game.question.correct;
         const isIdle = game.status === 'inprogress' && !game.question && !game.turn && !game.winner && !game.draw;
         if (bothWrong) {
             // Both players answered wrong - clear timer and change question with delay
@@ -143,7 +207,8 @@ function handleTimers(game) {
     }
 
     // Check if both players answered wrong - don't start timer in this case
-    const bothWrong = game.answers && game.answers.X === 'wrong' && game.answers.O === 'wrong';
+    const bothWrong = game.answers && game.answers.X && game.answers.O && 
+                      game.question && game.answers.X !== game.question.correct && game.answers.O !== game.question.correct;
     if (bothWrong) {
         // Don't start any timers when both players are wrong - waiting for new question
         clearInterval(questionTimer);
@@ -247,7 +312,7 @@ function handleAnswer(answer, correctAnswer) {
             } else {
                 showFeedback("Wrong answer!", "error");
                 let update = {};
-                update['answers/' + playerSymbol] = 'wrong';
+                update['answers/' + playerSymbol] = answer; // Store the actual answer chosen
                 gameRef.update(update);
             }
         }
@@ -256,7 +321,62 @@ function handleAnswer(answer, correctAnswer) {
 
 // All functions below are correct and do not need changes.
 function updateBoardAndGifs(game) { Array.from(document.getElementsByClassName("boxtext")).forEach((box, i) => box.innerText = game.board[i] || ""); const winBox = document.querySelector(".imgbox"); const drawBox = document.querySelector(".draw-imgbox"); if (game.winner) { winBox.classList.add("show"); if (!isSpectator) gameover.play(); } else { winBox.classList.remove("show"); } if (game.draw) { drawBox.classList.add("show"); if (!isSpectator) drawAudio.play(); } else { drawBox.classList.remove("show"); } }
-function displayQuestion(q, gameAnswers) { const quizContainer = document.getElementById("quiz-container"); quizContainer.style.display = "block"; document.getElementById("question").innerText = q.question; const answersDiv = document.getElementById("answers"); answersDiv.innerHTML = ""; const playerHasAnswered = gameAnswers && gameAnswers[playerSymbol]; q.answers.forEach(answer => { const button = document.createElement("button"); button.innerText = answer; if (playerHasAnswered || isSpectator) { button.disabled = true; } else { button.onclick = () => handleAnswer(answer, q.correct); } answersDiv.appendChild(button); }); }
+function displayQuestion(q, gameAnswers) { 
+    const quizContainer = document.getElementById("quiz-container"); 
+    quizContainer.style.display = "block"; 
+    document.getElementById("question").innerText = q.question; 
+    const answersDiv = document.getElementById("answers"); 
+    answersDiv.innerHTML = ""; 
+    
+    const playerHasAnswered = gameAnswers && gameAnswers[playerSymbol]; 
+    
+    if (isSpectator) {
+        // Spectator view: Show both players' choices
+        q.answers.forEach(answer => { 
+            const answerContainer = document.createElement("div");
+            answerContainer.className = "spectator-answer-container";
+            
+            const answerText = document.createElement("div");
+            answerText.className = "spectator-answer-text";
+            answerText.innerText = answer;
+            
+            const playerChoices = document.createElement("div");
+            playerChoices.className = "spectator-player-choices";
+            
+            // Check if Player X chose this answer
+            const playerXChose = gameAnswers && gameAnswers.X === answer;
+            // Check if Player O chose this answer  
+            const playerOChose = gameAnswers && gameAnswers.O === answer;
+            
+            if (playerXChose || playerOChose) {
+                const choices = [];
+                if (playerXChose) choices.push("Player X");
+                if (playerOChose) choices.push("Player O");
+                playerChoices.innerText = `✓ Chosen by: ${choices.join(", ")}`;
+                playerChoices.classList.add("chosen");
+            } else {
+                playerChoices.innerText = "○ No players chose this";
+                playerChoices.classList.add("not-chosen");
+            }
+            
+            answerContainer.appendChild(answerText);
+            answerContainer.appendChild(playerChoices);
+            answersDiv.appendChild(answerContainer);
+        });
+    } else {
+        // Regular player view
+        q.answers.forEach(answer => { 
+            const button = document.createElement("button"); 
+            button.innerText = answer; 
+            if (playerHasAnswered) { 
+                button.disabled = true; 
+            } else { 
+                button.onclick = () => handleAnswer(answer, q.correct); 
+            } 
+            answersDiv.appendChild(button); 
+        }); 
+    }
+}
 Array.from(document.getElementsByClassName("box")).forEach((element, i) => { element.addEventListener("click", () => { if (isSpectator) return; database.ref('games/' + gameId).once('value', snapshot => { const game = snapshot.val(); if (game.board[i] === "" && game.turn === playerSymbol && !game.winner && !game.draw) { clearInterval(moveTimer); audioTurn.play(); database.ref(`games/${gameId}/board/${i}`).set(playerSymbol); checkWinAndDrawAndUpdate(); } }); }); });
 function checkWinAndDrawAndUpdate() { database.ref('games/' + gameId).once('value', snapshot => { const game = snapshot.val(); let isWin = false, isDraw = false; const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]; wins.forEach(e => { if (game.board[e[0]] && game.board[e[0]] === game.board[e[1]] && game.board[e[1]] === game.board[e[2]]) { isWin = true; database.ref('games/' + gameId).update({ winner: game.board[e[0]] }); } }); if (!isWin && !game.board.includes("")) { isDraw = true; database.ref('games/' + gameId).update({ draw: true }); } if (!isWin && !isDraw) { database.ref('games/' + gameId).update({ turn: "" }); } }); }
 function showFeedback(message, type) { const feedbackEl = document.getElementById('feedback-message'); feedbackEl.textContent = message; feedbackEl.className = 'feedback'; feedbackEl.classList.add(type); feedbackEl.classList.add('show'); setTimeout(() => { feedbackEl.classList.remove('show'); }, 2500); }

@@ -7,6 +7,7 @@ body {
   background-size: cover;
   height: 100vh;
   width: 100%;
+  overflow: hidden;
 }
 nav li {
   list-style-type: none;
@@ -40,8 +41,10 @@ nav ul {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 50px;
+  margin-top: 30px;
   gap: 40px;
+  height: calc(100vh - 80px);
+  overflow: hidden;
 }
 
 .container {
@@ -127,7 +130,9 @@ nav ul {
 }
 .gameInfo {
   padding-right: 10vw;
-  padding-top: 5vw;
+  padding-top: 2vw;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
 }
 .gameInfo div span {
   padding-bottom: 3vw;
@@ -319,6 +324,70 @@ nav ul {
   border-color: #f5c6cb;  
 }
 
+/* Spectator Answer Containers */
+.spectator-answer-container {
+  margin-bottom: 6px;
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.9);
+  max-width: 100%;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 35px;
+}
+
+.spectator-answer-container:hover {
+  border-color: #7b57ff;
+  box-shadow: 0 1px 4px rgba(123, 87, 255, 0.2);
+}
+
+.spectator-answer-text {
+  font-weight: 600;
+  font-size: 0.9em;
+  color: #2c3e50;
+  word-wrap: break-word;
+  line-height: 1.1;
+  flex: 1;
+  text-align: left;
+}
+
+.spectator-player-choices {
+  font-size: 0.75em;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.0;
+  text-align: right;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+
+.spectator-player-choices.chosen {
+  color: #7b57ff;
+  font-weight: 600;
+}
+
+.spectator-player-choices.not-chosen {
+  color: #7f8c8d;
+}
+
+/* Ensure quiz container doesn't overflow */
+#quiz-container {
+  margin-top: 10px;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  text-align: center;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-height: 300px;
+  overflow-y: auto;
+}
 
 /* In style.css */
 

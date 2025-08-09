@@ -27,7 +27,26 @@ function createGame() {
 function joinGame() {
     const gameId = document.getElementById("gameIdInput").value.toUpperCase();
     if (!gameId) { alert("Please enter a Game ID."); return; }
-    window.location.href = `index.html?gameId=${gameId}&player=O`;
+    
+    // Check if room is full before joining
+    const gameRef = database.ref('games/' + gameId);
+    gameRef.once('value', (snapshot) => {
+        if (!snapshot.exists()) {
+            alert("Game not found! Please check the code.");
+            return;
+        }
+        
+        const game = snapshot.val();
+        const roomIsFull = game.players && game.players.X && game.players.O;
+        
+        if (roomIsFull) {
+            alert("Room is full! Only 2 players allowed. Please try a different room.");
+            return;
+        }
+        
+        // Room has space, allow joining as Player O
+        window.location.href = `index.html?gameId=${gameId}&player=O`;
+    });
 }
 
 function spectateGame() {
