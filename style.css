@@ -1,37 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
 }
+
 body {
-  background: linear-gradient(45deg, #8e9eab, #eef2f3);
+  background: linear-gradient(to bottom, #050510, #0a0a15, #000000);
   background-size: cover;
   height: 100vh;
   width: 100%;
   overflow: hidden;
+  
 }
+
+.text-gold {
+  color: #ffff00;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.text-glow {
+  text-shadow: 
+    0 0 10px rgba(255, 215, 0, .7), 0 0 20px rgba(255, 215, 0, .5);
+}
+
+.text-flame {
+  color: #ff4500;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.text-flame-glow {
+  text-shadow: 
+    0 0 10px rgba(255, 69, 0, .7), 0 0 20px rgba(255, 69, 0, .5);
+}
+.something{
+  color: white;
+  font-family: 'Orbitron', 'Courier New', monospace;
+}
+.nav-left{
+  position: absolute;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  left: 25px; 
+  top: 50px;
+}
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 215, 0);
+  object-fit: cover;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.nav-left .logo:hover {
+  transform: scale(1.1);       /* Makes it 10% bigger on hover */
+  border-color: rgba(255, 215, 0, 0.8);  /* Brighter border on hover */
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); /* Stronger glow on hover */
+}
+  
+
+
+
 nav li {
   list-style-type: none;
-  font-family: "aboreto", sans-serif;
-  font-weight: 600;
+  font-family: 'Orbitron', 'Courier New', monospace;
+  font-weight: 900;
   font-style: normal;
   transition: all 0.5s ease;
   cursor: pointer;
+  text-transform: uppercase;
 }
+
 nav li:hover {
   transform: translateY(-2px);
 }
+
 nav {
   display: flex;
   margin: auto;
-  background-color: transparent;
-  font-size: 29px;
+  font-size: 42px;
   align-items: center;
   justify-content: space-between;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border: 0px solid black;
-  box-shadow: 0px 0px 10px 0px black;
-  backdrop-filter: blur(20px);
+  padding: 15px 0;
+  
+  border-radius: 8px;
+  margin: 10px;
+  font-family: orbitron, 'Courier New', monospace;
+  font-weight: 700px;
 }
 nav ul {
   margin: auto;
@@ -156,27 +216,52 @@ nav ul {
   font-size: 2.5em;
 }
 
+#lobby #createGame {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: rgb(255 215 0 / var(--tw-bg-opacity, 1));
+  color: rgb(0, 0, 0);
+  margin: 10px;
+  transition: all 0.3s ease;
+  
+}
+
+#lobby #createGame:hover {
+  box-shadow: 0px 0px 10px rgb(255 215 0)
+}
 #lobby button {
   padding: 10px 20px;
   font-size: 1.2em;
   cursor: pointer;
   border-radius: 8px;
   border: none;
-  background-color: #7b57ff;
-  color: white;
-  margin: 10px;
-  transition: background-color 0.3s;
 }
-
-#lobby button:hover {
-  background-color: #9173ff;
+#lobby #spectateGame{
+  background-color: rgb(255 215 0 / var(--tw-bg-opacity, 1));
+  color: black;
+  transition: all 0.3s ease;
 }
-
+#lobby #spectateGame:hover {
+  box-shadow: 0px 0px 10px rgb(255 215 0);
+}
+#lobby #joinGame {
+  background-color: rgb(255 69 0 / var(--tw-bg-opacity, 1));
+  color: black;
+  transition: all 0.3s ease;
+  margin-right: 20px;
+}
+#lobby #joinGame:hover {
+  box-shadow: 0px 0px 10px rgb(255 69 0);
+}
 #lobby input {
   padding: 10px;
   font-size: 1.2em;
   border-radius: 8px;
   border: 1px solid #ccc;
+  margin-right: 20px;
 }
 
 
@@ -390,21 +475,19 @@ nav ul {
 #startGameBtn {
   width: 120px;
   height: 40px;
-  background-color: #2ecc71;
+  background-color: rgb(255 215 0  );
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   font-weight: 600;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px -1px #27ae60;
+  border-radius: 12px;
   transition: all 0.3s ease;
   margin-left: 20px;
   font-size: 16px;
 }
 
 #startGameBtn:hover {
-  background-color: #27ae60;
-  box-shadow: 0 10px 15px -3px #27ae60;
+  box-shadow: 0 0 10px rgba(255, 215, 0);
 }
 
 #startGameBtn:disabled {
