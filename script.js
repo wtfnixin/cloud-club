@@ -318,7 +318,37 @@ function handleAnswer(answer, correctAnswer) {
 }
 
 // All functions below are correct and do not need changes.
-function updateBoardAndGifs(game) { Array.from(document.getElementsByClassName("boxtext")).forEach((box, i) => box.innerText = game.board[i] || ""); const winBox = document.querySelector(".imgbox"); const drawBox = document.querySelector(".draw-imgbox"); if (game.winner) { winBox.classList.add("show"); if (!isSpectator) gameover.play(); } else { winBox.classList.remove("show"); } if (game.draw) { drawBox.classList.add("show"); if (!isSpectator) drawAudio.play(); } else { drawBox.classList.remove("show"); } }
+function updateBoardAndGifs(game) { 
+    Array.from(document.getElementsByClassName("boxtext")).forEach((box, i) => {
+        const symbol = game.board[i] || "";
+        box.innerText = symbol;
+        
+        // Remove existing player classes
+        box.classList.remove("player-x", "player-o");
+        
+        // Add appropriate class based on symbol
+        if (symbol === "X") {
+            box.classList.add("player-x");
+        } else if (symbol === "O") {
+            box.classList.add("player-o");
+        }
+    }); 
+    
+    const winBox = document.querySelector(".imgbox"); 
+    const drawBox = document.querySelector(".draw-imgbox"); 
+    if (game.winner) { 
+        winBox.classList.add("show"); 
+        if (!isSpectator) gameover.play(); 
+    } else { 
+        winBox.classList.remove("show"); 
+    } 
+    if (game.draw) { 
+        drawBox.classList.add("show"); 
+        if (!isSpectator) drawAudio.play(); 
+    } else { 
+        drawBox.classList.remove("show"); 
+    } 
+}
 function displayQuestion(q, gameAnswers) { 
     const quizContainer = document.getElementById("quiz-container"); 
     quizContainer.style.display = "block"; 

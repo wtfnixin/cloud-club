@@ -58,9 +58,9 @@ body {
 }
 
 .nav-left .logo:hover {
-  transform: scale(1.1);       /* Makes it 10% bigger on hover */
-  border-color: rgba(255, 215, 0, 0.8);  /* Brighter border on hover */
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); /* Stronger glow on hover */
+  transform: scale(1.1);       
+  border-color: rgba(255, 215, 0, 0.8); 
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
   
 
@@ -102,7 +102,7 @@ nav ul {
   justify-content: center;
   align-items: flex-start;
   margin-top: 30px;
-  gap: 40px;
+  gap: 50px;
   height: calc(100vh - 80px);
   overflow: hidden;
 }
@@ -116,13 +116,63 @@ nav ul {
   padding-left: 34.8vw;
 }
 .container .box {
-  border: 2px solid black;
+  border: 2px solid white;
   transition: all 0.2s ease;
   font-size: 7vw;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  color: white;
+  font-weight: bold;
+}
+
+/* Styling for X and O marks */
+.boxtext {
+  position: relative;
+  z-index: 2;
+}
+
+/* X player styling - Yellow neon */
+.container .box .boxtext.player-x {
+ color: #ffff00;
+  text-shadow: 
+    0 0 10px rgba(255, 215, 0, .7), 
+    0 0 20px rgba(255, 215, 0, .5)
+}
+
+/* O player styling - Red neon */
+.container .box .boxtext.player-o {
+  color: rgba(255 69, 0);
+  text-shadow: 
+    0 0 10px rgba(255, 69, 0, .7), 0 0 20px rgba(255, 69, 0, .5), 0 0 30px rgba(255, 69, 0, .3);
+}
+  
+
+/* Add neon glow only to internal borders */
+.container .box:not(.bt-0):before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: white;
+  box-shadow: 0 0 10px white;
+  z-index: 1;
+}
+
+.container .box:not(.bl-0):after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: white;
+  box-shadow: 0 0 10px white;
+  z-index: 1;
 }
 .container .box:hover {
   background-color: rgba(133, 146, 146, 0.281);
@@ -190,7 +240,7 @@ nav ul {
 }
 .gameInfo {
   padding-right: 10vw;
-  padding-top: 2vw;
+  padding-top: 0.5vw;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
 }
@@ -199,6 +249,11 @@ nav ul {
   display: inline-block;
   font-size: 2vw;
   margin-left: 2vw;
+}
+
+.info {
+  color: white;
+  text-shadow: 0 0 10px white;
 }
 .gameInfo div button {
     margin-left: 2vw;
@@ -267,36 +322,74 @@ nav ul {
 
 #quiz-container {
   margin-top: 20px;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(5, 5, 16, 0.95), rgba(10, 10, 21, 0.95));
+  border: 2px solid white;
+  box-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
   text-align: center;
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+#quiz-container h3 {
+  color: white;
+  text-shadow: 0 0 15px white;
+  margin-bottom: 20px;
+  font-family: 'Orbitron', 'Courier New', monospace;
+  font-size: 1.4em;
 }
 
 #answers button {
   display: block;
   width: 100%;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 12px;
+  margin: 8px 0;
   font-size: 1em;
   cursor: pointer;
+  background: linear-gradient(135deg, rgba(20, 20, 35, 0.8), rgba(30, 30, 50, 0.8));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: white;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', 'Courier New', monospace;
+}
+
+#answers button:hover {
+  background: linear-gradient(135deg, rgba(40, 40, 60, 0.9), rgba(50, 50, 70, 0.9));
+  border-color: white;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+#answers button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 #question-timer-container, #move-timer-container {
   margin-top: 15px;
   font-size: 1.5vw;
-  font-family: sans-serif;
+  font-family: 'Orbitron', 'Courier New', monospace;
   font-weight: bold;
-  color: #333;
-  background-color: rgba(255, 255, 255, 0.6);
-  padding: 10px;
-  border-radius: 8px;
+  color: white;
+  background: linear-gradient(135deg, rgba(5, 5, 16, 0.9), rgba(10, 10, 21, 0.9));
+  border: 2px solid white;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  padding: 15px;
+  border-radius: 12px;
   text-align: center;
+  text-shadow: 0 0 10px white;
 }
 
 #question-time, #move-time {
-  color: #7b57ff;
+  color: #ffff00;
   font-size: 1.8vw;
+  text-shadow: 0 0 15px #ffff00;
+  font-weight: 900;
 }
 #spectator-info {
   text-align: center;
