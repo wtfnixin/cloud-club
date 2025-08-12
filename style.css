@@ -111,7 +111,7 @@ nav ul {
   display: grid;
   grid-template-columns: repeat(3, 10vw);
   grid-template-rows: repeat(3, 10vw);
-  margin: auto;
+  margin: 30px 0;
   font-family: sans-serif;
   padding-left: 34.8vw;
 }
@@ -128,13 +128,11 @@ nav ul {
   font-weight: bold;
 }
 
-/* Styling for X and O marks */
 .boxtext {
   position: relative;
   z-index: 2;
 }
 
-/* X player styling - Yellow neon */
 .container .box .boxtext.player-x {
  color: #ffff00;
   text-shadow: 
@@ -142,7 +140,6 @@ nav ul {
     0 0 20px rgba(255, 215, 0, .5)
 }
 
-/* O player styling - Red neon */
 .container .box .boxtext.player-o {
   color: rgba(255 69, 0);
   text-shadow: 
@@ -150,7 +147,6 @@ nav ul {
 }
   
 
-/* Add neon glow only to internal borders */
 .container .box:not(.bt-0):before {
   content: '';
   position: absolute;
@@ -159,7 +155,9 @@ nav ul {
   right: 0;
   height: 2px;
   background: white;
-  box-shadow: 0 0 10px white;
+  box-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.9),
+    0 0 25px rgba(255, 255, 255, 0.5);
   z-index: 1;
 }
 
@@ -171,11 +169,16 @@ nav ul {
   bottom: 0;
   width: 2px;
   background: white;
-  box-shadow: 0 0 10px white;
+  box-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.9),
+    0 0 25px rgba(255, 255, 255, 0.5);
   z-index: 1;
 }
 .container .box:hover {
-  background-color: rgba(133, 146, 146, 0.281);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.6),
+    0 0 25px rgba(255, 255, 255, 0.3);
 }
 .imgbox {
   position: absolute;
@@ -247,13 +250,16 @@ nav ul {
 .gameInfo div span {
   padding-bottom: 3vw;
   display: inline-block;
-  font-size: 2vw;
+  font-size: 35px;
   margin-left: 2vw;
 }
 
 .info {
   color: white;
   text-shadow: 0 0 10px white;
+  font-family: VT323,orbitron;
+  
+
 }
 .gameInfo div button {
     margin-left: 2vw;
