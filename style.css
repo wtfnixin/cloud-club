@@ -91,26 +91,31 @@ nav {
 nav ul {
   margin: auto;
 }
-.gamecontainer {
-  background-color: transparent;
+.main-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
-  gap: 50px;
-  height: calc(100vh - 80px);
-  overflow: hidden;
-  flex-direction: row;
+  gap: 60px;
+  min-height: calc(100vh - 120px);
+  padding: 20px;
+  margin-top: 80px;
   flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 15px 18%;
+}
+
+.tic-tac-toe-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
   display: grid;
   grid-template-columns: repeat(3, 10vw);
   grid-template-rows: repeat(3, 10vw);
-  margin: 30px 0;
   font-family: sans-serif;
-  padding-left: 34.8vw;
 }
 .container .box {
   border: 2px solid white;
@@ -218,17 +223,33 @@ nav ul {
 }
 
 .gameInfo {
-  padding-right: 10vw;
-  padding-top: 0.5vw;
+  padding: 20px;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  text-align: center;
 }
 .gameInfo div span {
-  padding-bottom: 3vw;
+  padding-bottom: 20px;
   display: inline-block;
   font-size: 35px;
-  margin-left: 2vw;
 }
+
+.info {
+  color: white;
+  text-shadow: 0 0 10px white;
+  font-family: VT323,orbitron;
+  
+
+}
+.gameInfo div button {
+    margin-left: 2vw;
+}
+
 #createGame,#joingame{
   padding: 10px 15px;
   border-radius: 8px;
@@ -278,11 +299,16 @@ nav ul {
 .paragraphs{
   margin-bottom: 30px;
   font-family: comfortaa;
-  --tw-text-opacity: 1;
+  --tw-text-opacity: 0.8;
   color: rgb(209 213 219);  
   font-size: 1.125rem;
+  align-items: start;
+  max-width: 43%;        
+  line-height: 1.6;      
+  margin-right: 2rem; 
+  
+  
 }
-
 
 .info {
   color: white;
