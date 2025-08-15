@@ -232,6 +232,7 @@ nav ul {
   align-items: center;
   min-width: 300px;
   text-align: center;
+  max-width: 28%;
 }
 .gameInfo div span {
   padding-bottom: 20px;
