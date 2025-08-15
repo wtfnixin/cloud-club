@@ -48,6 +48,11 @@ function joinGame() {
     });
 }
 
+function goBackOrClose() {
+    window.close() || (window.location.href = '/');
+}
+
+
 function spectateGame() {
     const gameId = document.getElementById("gameIdInput").value.toUpperCase();
     if (!gameId) { alert("Please enter a Game ID to spectate."); return; }

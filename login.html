@@ -12,43 +12,59 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Berkshire+Swash&family=Dancing+Script:wght@400..700&family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
     <link rel="preload" href="https://unpkg.com/@splinetool/viewer@1.10.44/build/spline-viewer.js" as="script">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Berkshire+Swash&family=Comfortaa:wght@300..700&family=Dancing+Script:wght@400..700&family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Pixelify+Sans:wght@400..700&family=VT323&display=swap" rel="stylesheet">
+
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.44/build/spline-viewer.js"></script>
 </head>
 <body>
 
     <nav>
         <div class="nav-left">
-            <img src="ChatGPT_Image_Jul_28__2025__11_54_46_PM-removebg-preview.png" alt="Logo" class="logo">
+            <ul>
+                <li><span class="text-gold text-glow">TIC</span> <span class="text-flame text-flame-glow">TAC</span> <span class="text-gold text-glow">TOE</span></li>
+            </ul>
         </div>
-        <ul>
-            <li><span class="text-gold text-glow">TIC</span> <span class="text-flame text-flame-glow">TAC</span> <span class="text-gold text-glow">TOE</span></li>
-        </ul>
+
+        
+        
     </nav>
     <div class="main-container">
-
-
-        <div class="login-card" id="lobby">
-            <h2><span class="something">Multiplayer Quiz Tic Tac Toe</span></h2>
-            <div class="button-group">
-                <button id="createGame">Create New Game</button>
+        <div class="login-content">
+            <div class="only-text">
+                <h1 class="text-gold text-glow"><span class="white-glow">Challenge Friends</span> <br><span class="text-flame text-flame-glow">in Epic</span>  <br>TIC-TAC-TOE<br> Battles!</h1>
             </div>
-            <div class="input-section">
-                <div class="input-group">
-                    <input type="text" id="gameIdInput" placeholder="Enter Game ID">
-                </div>
-                <div class="action-buttons">
-                    <button id="joinGame">Join Game</button>
-                    <button id="spectateGame">Spectate Game</button>
-                </div>
+            <div class="paragraphs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, error vitae rem voluptatibus iure esse qui non suscipit sequi asperiores eaque doloribus unde ducimus laudantium?</div>
+            <div class="buttonss">
+                <button id="createGame" class="gold-btn gap-2 items-center">Create Room
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </button>
+                <button id="joingame" class="flame-btn gap-2 items-center">Join Game
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </button>
             </div>
         </div>
-        <spline-viewer class="spline-hero" url="https://prod.spline.design/wR2hQ1vQ5JWTdG-Y/scene.splinecode"></spline-viewer>
 
+        <div class="game-container">
+            <div class="tic-tac-toe-grid">
+                <div class="grid-cell x">X</div>
+                <div class="grid-cell o">O</div>
+                <div class="grid-cell x">X</div>
+                <div class="grid-cell o">O</div>
+                <div class="grid-cell x">X</div>
+                <div class="grid-cell o">O</div>
+                <div class="grid-cell x">X</div>
+                <div class="grid-cell o">O</div>
+                <div class="grid-cell x">X</div>
+            </div>
+        </div>
+       
     </div>
     <div id="gameIdModal" class="modal-overlay" style="display: none;">
         <div class="modal-card">
+            <button class="cross-btn" onclick="goBackOrClose()"></button>
             <h3>Your Game Room is Ready!</h3>
             <p>Share this code with a friend:</p>
             <div id="gameIdDisplay" class="game-code"></div>

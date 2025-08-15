@@ -1,10 +1,38 @@
 .main-container {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: calc(100vh - 200px);
     padding: 20px;
-    margin-top: -60px;
+    margin-top: 125px;
+    margin-left: 30px;
+    margin-right: 55.8%;
+}
+.login-content{
+
+}
+
+.only-text {
+    font-family: orbitron, sans-serif;
+    font-size: 26px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.buttonss {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    font-family: comfortaa,sans-serif;
+    font-weight: 600;
+}
+.gap-2{
+    gap: .5rem;
+    display: flex;
+}
+.items-center{
+    align-items: center;
 }
 
 .login-card {
@@ -97,21 +125,6 @@
     gap: 15px;
     margin-bottom: 20px;
 }
-.spline-hero{
-    position: absolute;
-    width: 70%;
-    height: 70%;
-    left: 50%;
-    top: 20%;
-    background-size: cover;
-    
-    animation: translateY 1s ease-in-out infinite alternate;
-    }
-
-.spline-hero.loaded {
-    opacity: 1;
-    animation-play-state: running;
-}
 
 @keyframes translateY {
     0% { transform: rotateY(25deg) translateY(0) translateZ(0); }
@@ -188,7 +201,6 @@
     transform: translateY(-1px);
 }
 
-/* Enhanced modal styles */
 .modal-card {
     background: linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
     backdrop-filter: blur(25px);
@@ -285,4 +297,53 @@
     .main-container {
         padding: 10px;
     }
+}
+
+
+.cross-btn {
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    position: relative;  
+    left: 98%;
+    bottom: 17px;
+}
+
+.cross-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.cross-btn:active {
+    background-color: #e0e0e0;
+    transform: scale(0.95);
+}
+
+.cross-btn::before,
+.cross-btn::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 2px;
+    background-color: #666;
+    transition: background-color 0.2s ease;
+}
+
+.cross-btn::before {
+    transform: rotate(45deg);
+}
+
+.cross-btn::after {
+    transform: rotate(-45deg);
+}
+
+.cross-btn:hover::before,
+.cross-btn:hover::after {
+    background-color: #333;
 }

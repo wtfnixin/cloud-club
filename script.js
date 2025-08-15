@@ -234,7 +234,6 @@ function handleTimers(game) {
             startMoveTimer();
         }
     }
-    // No active phase - clear all timers
     else {
         clearInterval(questionTimer);
         clearInterval(moveTimer);

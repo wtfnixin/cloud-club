@@ -1,0 +1,12 @@
+0000000000000000000000000000000000000000 2bd585598e561b417e1f688dbf692ae7ba3b974c wtfnixin <nitinkumardontam@gmail.com> 1754652606 +0530	clone: from https://github.com/wtfnixin/prototype-tictac.git
+2bd585598e561b417e1f688dbf692ae7ba3b974c aebade8e920043c74b5edd73af538daf2b05af17 wtfnixin <nitinkumardontam@gmail.com> 1754654988 +0530	commit: added spectator mode
+aebade8e920043c74b5edd73af538daf2b05af17 1820c7ef343b6121c76d8342b92f165748ae1ad9 wtfnixin <nitinkumardontam@gmail.com> 1754657718 +0530	commit: made some changes
+1820c7ef343b6121c76d8342b92f165748ae1ad9 75f7b419d413bfe8e1c8c41587d95eab6e03b7a8 wtfnixin <nitinkumardontam@gmail.com> 1754725670 +0530	commit: fixed bugs
+75f7b419d413bfe8e1c8c41587d95eab6e03b7a8 16d6e9247f58c38021a603ddc3ae3bf62a95e939 wtfnixin <nitinkumardontam@gmail.com> 1754725943 +0530	commit: added a popup card for the game id
+16d6e9247f58c38021a603ddc3ae3bf62a95e939 82ac5487bc6c71f25647c9416c24aaf3dd25e158 wtfnixin <nitinkumardontam@gmail.com> 1754726673 +0530	commit: fixed bugs
+82ac5487bc6c71f25647c9416c24aaf3dd25e158 24c62d2ad872ad4f0e1956d966abe2172d27eb77 wtfnixin <nitinkumardontam@gmail.com> 1754733468 +0530	commit: fixed
+24c62d2ad872ad4f0e1956d966abe2172d27eb77 f809ae79f48374c99c33d98a7be72b4217b1e44c wtfnixin <nitinkumardontam@gmail.com> 1754735026 +0530	commit: new features
+f809ae79f48374c99c33d98a7be72b4217b1e44c d62567a0c019967b04738910ff2d67a5ad03f199 wtfnixin <nitinkumardontam@gmail.com> 1754735273 +0530	commit: updated readme
+d62567a0c019967b04738910ff2d67a5ad03f199 afb7e61022a2cbe95dfba686b4006392e64d43c2 wtfnixin <nitinkumardontam@gmail.com> 1754851147 +0530	commit: made clean ui and added spline element
+afb7e61022a2cbe95dfba686b4006392e64d43c2 346d503524194f75b2abfe159f57429267c862d7 wtfnixin <nitinkumardontam@gmail.com> 1754914917 +0530	commit: made clean ui in game
+346d503524194f75b2abfe159f57429267c862d7 232a6e19d64bcaca4b58f4e3f1c1efb8fa9553c3 wtfnixin <nitinkumardontam@gmail.com> 1755033963 +0530	commit: completed sleek UI
