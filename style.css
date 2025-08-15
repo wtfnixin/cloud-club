@@ -11,8 +11,6 @@ body {
   height: 100vh;
   width: 100%;
   overflow: hidden;
-
-  
 }
 
 .text-gold {
@@ -20,10 +18,10 @@ body {
   font-weight: 900;
   letter-spacing: 3px;
 }
+
 .white-glow{
   color: white;
-  text-shadow:0 0 10px rgba(255, 255, 252, 0.7), 0 0 20px rgba(255, 255, 255, 0.5); ;
-
+  text-shadow:0 0 10px rgba(255, 255, 252, 0.7), 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .text-glow {
@@ -41,10 +39,7 @@ body {
   text-shadow: 
     0 0 10px rgba(255, 69, 0, .7), 0 0 20px rgba(255, 69, 0, .5);
 }
-.something{
-  color: white;
-  font-family: 'Orbitron', 'Courier New', monospace;
-}
+
 .nav-left{
   position: absolute;
   transform: translateY(-50%);
@@ -55,9 +50,10 @@ body {
   font-size: 30px;
   padding-left: 6px ;
 }
-
-
-
+.something{
+  color: white;
+  font-family: 'Orbitron', 'Courier New', monospace;
+}
 
 
 
