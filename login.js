@@ -48,7 +48,7 @@ function joinGame() {
     });
 }
 
-function goBackOrClose() {
+function goBack() {
     window.close() || (window.location.href = '/');
 }
 
