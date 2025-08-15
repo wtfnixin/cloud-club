@@ -7,6 +7,7 @@
     <title>TIC TAC TOE - Login</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="login-card.css">
+    <link rel="stylesheet" href="login-card-modal.css">
     <link rel="stylesheet" href="https://use.typekit.net/zyj3rrc.css">
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
@@ -69,6 +70,25 @@
             <p>Share this code with a friend:</p>
             <div id="gameIdDisplay" class="game-code"></div>
             <button id="startGameButton">Let's Go!</button>
+        </div>
+    </div>
+
+    <!-- Login Card Modal -->
+    <div id="loginCardModal" class="modal-overlay" style="display: none;">
+        <div class="login-card-modal">
+            <button class="cross-btn" onclick="closeLoginCardModal()"></button>
+            <div class="login-card" id="lobby">
+                <h2><span class="something">Multiplayer Quiz Tic Tac Toe</span></h2>
+                <div class="input-section">
+                    <div class="input-group">
+                        <input type="text" id="gameIdInput" placeholder="Enter Game ID">
+                    </div>
+                    <div class="action-buttons">
+                        <button id="joinGame">Join Game</button>
+                        <button id="spectateGame">Spectate Game</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="login.js"></script>

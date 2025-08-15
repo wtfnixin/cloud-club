@@ -55,7 +55,7 @@
 
 .login-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 0px 10px rgb(255 215 0)
+    box-shadow: 0px 0px 20px rgb(255 215 0)
 
         
 }
@@ -213,8 +213,12 @@
     box-shadow: 
         0 25px 50px rgba(0,0,0,0.5),
         0 0 30px rgba(123, 87, 255, 0.2);
-    transform: scale(0.9);
     transition: all 0.3s ease;
+}
+.modal-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0px 0px 20px rgb(255 69 0)
+
 }
 
 .modal-overlay.show {
@@ -258,7 +262,7 @@
 }
 
 #startGameButton {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    background: #ff6500;
     color: white;
     border: none;
     padding: 15px 30px;
@@ -270,12 +274,12 @@
     font-family: 'Lexend', sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
-    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+    box-shadow: 0 0px 20px #ff6500;
 }
 
 #startGameButton:hover {
-    background: linear-gradient(135deg, #27ae60, #229954);
-    box-shadow: 0 12px 30px rgba(46, 204, 113, 0.4);
+    background: #ff6500;
+    box-shadow: 0 12px 30px #ff6500;
     transform: translateY(-2px);
 }
 

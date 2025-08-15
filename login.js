@@ -12,6 +12,7 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 document.getElementById("createGame").addEventListener("click", createGame);
+document.getElementById("joingame").addEventListener("click", openLoginCardModal);
 document.getElementById("joinGame").addEventListener("click", joinGame);
 document.getElementById("spectateGame").addEventListener("click", spectateGame);
 
@@ -49,7 +50,8 @@ function joinGame() {
 }
 
 function goBack() {
-    window.close() || (window.location.href = '/');
+    const closePopup = document.getElementById('gameIdModal');
+    closePopup.style.display = 'none';
 }
 
 
@@ -79,3 +81,21 @@ function showGameIdPopup(gameId, playerSymbol) {
         window.location.href = `index.html?gameId=${gameId}&player=${playerSymbol}`;
     };
 }
+
+function openLoginCardModal() {
+    const modal = document.getElementById('loginCardModal');
+    modal.style.display = 'flex';
+}
+
+function closeLoginCardModal() {
+    const modal = document.getElementById('loginCardModal');
+    modal.style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('loginCardModal');
+    if (event.target === modal) {
+        closeLoginCardModal();
+    }
+});
