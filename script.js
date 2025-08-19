@@ -24,7 +24,51 @@ const questions = [
     { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Jupiter"], correct: "Mars" },
 ];
 
+// Animation utility functions
+function animateElement(element, animationClass = 'fade-in', delay = 0) {
+    if (!element) return;
+    
+    element.classList.add('animate-hidden');
+    
+    setTimeout(() => {
+        element.classList.remove('animate-hidden');
+        element.classList.add(animationClass);
+    }, delay);
+}
+
+function animateElements(elements, animationClass = 'fade-in', staggerDelay = 100) {
+    if (!elements || elements.length === 0) return;
+    
+    elements.forEach((element, index) => {
+        animateElement(element, animationClass, index * staggerDelay);
+    });
+}
+
+// Initialize animations on page load
+function initializeAnimations() {
+    // Animate game board
+    const gameBoard = document.querySelector('.container');
+    if (gameBoard) {
+        animateElement(gameBoard, 'fade-in-scale', 300);
+    }
+    
+    // Animate game info elements
+    const gameInfo = document.querySelector('.gameInfo');
+    if (gameInfo) {
+        animateElement(gameInfo, 'fade-in-right', 500);
+    }
+    
+    // Animate nav title
+    const navTitle = document.querySelector('nav li');
+    if (navTitle) {
+        animateElement(navTitle, 'fade-in', 100);
+    }
+}
+
 window.onload = () => {
+    // Initialize animations first
+    initializeAnimations();
+    
     const urlParams = new URLSearchParams(window.location.search);
     gameId = urlParams.get('gameId');
     playerSymbol = urlParams.get('player');
