@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="login-card.css">
     <link rel="stylesheet" href="login-card-modal.css">
-    <link rel="stylesheet" href="mobile-responsive-enhancement.css">
     <link rel="stylesheet" href="https://use.typekit.net/zyj3rrc.css">
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://unpkg.com/@splinetool/viewer@1.10.44/build/spline-viewer.js" as="script">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/EasePack.min.js" integrity="sha512-Eauecl1O5GSTGUe/LhI/3bW1ucGUsySCiro8QspjvZa4MRnD7bCPrFckVDvn2v0S/T+l/p7U9LeLELK8xwnf3w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Berkshire+Swash&family=Comfortaa:wght@300..700&family=Dancing+Script:wght@400..700&family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Pixelify+Sans:wght@400..700&family=VT323&display=swap" rel="stylesheet">
@@ -22,6 +23,7 @@
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.44/build/spline-viewer.js"></script>
 </head>
 <body>
+    
 
     <nav>
         <div class="nav-left">
@@ -36,9 +38,9 @@
     <div class="main-container">
         <div class="login-content">
             <div class="only-text">
-                <h1 class="text-gold text-glow"><span class="white-glow">Challenge Friends</span> <br><span class="text-flame text-flame-glow">in Epic</span>  <br>TIC-TAC-TOE<br> Battles!</h1>
+                <h1 class="text-gold text-glow"><span class="white-glow staggerAnimation">Challenge Friends</span> <br><span class="text-flame text-flame-glow staggerAnimation">in Epic</span>  <br><span class="staggerAnimation">TIC-TAC-TOE</span><br> <span class="staggerAnimation">Battles!</span></h1>
             </div>
-<div class="paragraphs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, error vitae rem voluptatibus iure esse qui non suscipit sequi asperiores eaque doloribus unde ducimus laudantium?</div>
+            <div class="paragraphs fadein">Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, error vitae rem voluptatibus iure esse qui non suscipit sequi asperiores eaque doloribus unde ducimus laudantium?</div>
             <div class="buttonss">
                 <button id="createGame" class="gold-btn gap-2 items-center">Create Room
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
@@ -93,5 +95,6 @@
         </div>
     </div>
     <script src="login.js"></script>
+    <script src="gsap.js"></script>
 </body>
 </html>

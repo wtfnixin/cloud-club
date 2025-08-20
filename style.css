@@ -5,113 +5,8 @@
   padding: 0;
 }
 
-/* Fade-in animation keyframes */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Animation utility classes */
-.fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.fade-in-scale {
-  animation: fadeInScale 0.5s ease-out forwards;
-}
-
-.fade-in-left {
-  animation: fadeInLeft 0.6s ease-out forwards;
-}
-
-.fade-in-right {
-  animation: fadeInRight 0.6s ease-out forwards;
-}
-
-.fade-in-delay-1 {
-  animation-delay: 0.1s;
-}
-
-.fade-in-delay-2 {
-  animation-delay: 0.2s;
-}
-
-.fade-in-delay-3 {
-  animation-delay: 0.3s;
-}
-
-.fade-in-delay-4 {
-  animation-delay: 0.4s;
-}
-
-.fade-in-delay-5 {
-  animation-delay: 0.5s;
-}
-
-/* Initial hidden state for elements */
-.animate-hidden {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.animate-hidden-scale {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.animate-hidden-left {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.animate-hidden-right {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
 body {
   background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139, 92, 246, 0.25), transparent 70%), #000000;
-
-
   background-size: cover;
   height: 100vh;
   width: 100%;
@@ -408,8 +303,7 @@ nav ul {
   max-width: 43%;        
   line-height: 1.6;      
   margin-right: 2rem; 
-  
-  
+  opacity: 0;
 }
 
 .info {
@@ -770,6 +664,8 @@ nav ul {
   position: fixed;
   left: 60%;
   font-family: orbitron,sans-serif;
+  opacity: 0;
+  transform: translateX(100px);
 }
 
 .tic-tac-toe-grid {
