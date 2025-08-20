@@ -6,7 +6,9 @@
 }
 
 body {
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139, 92, 246, 0.25), transparent 70%), #000000;
+  background:  radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139, 92, 246, 0.25), transparent 70%),
+                 radial-gradient(125% 125% at 50% 10%, #000000 40%, #010133 100%),
+                #000000;;
   background-size: cover;
   height: 100vh;
   width: 100%;
