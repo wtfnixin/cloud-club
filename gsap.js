@@ -62,9 +62,9 @@ window.addEventListener('load', function() {
 function staggerAnimation() {
     gsap.fromTo('.staggerAnimation', 
         { 
-            x: -80,      // Slide from left
+            x: -80,      
             opacity: 0,  
-            y: 10        // Start slightly below for extra smoothness
+            y: 10        
         },
         {
             x: 0,        
@@ -72,7 +72,7 @@ function staggerAnimation() {
             y: 0,
             duration: 0.6,
             ease: "power3.out",
-            stagger: 0.2  // Clean stagger timing
+            stagger: 0.2  
         }
     );
 }
