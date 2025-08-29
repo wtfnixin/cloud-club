@@ -22,6 +22,16 @@ let localTimerIsRunning = false;
 const questions = [
     { question: "What is the capital of France?", answers: ["Berlin", "Madrid", "Paris"], correct: "Paris" },
     { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Jupiter"], correct: "Mars" },
+    { question: "What is the output of: print(2 * '12') ?", answers: ["24", "1212", "Error", "12"], correct: "1212" },
+    { question: "Which of the following is immutable in Python?", answers: ["List", "Tuple", "Dictionary", "Set"], correct: "Tuple" },
+    { question: "What is the output of: print(5 // 2) ?", answers: ["2.5", "3", "2", "Error"], correct: "2" },
+    { question: "Which keyword in Python is used to handle exceptions?", answers: ["error", "except", "throw", "handle"], correct: "except" },
+    { question: "If 3 pens cost ₹45, how many pens can be bought for ₹180?", answers: ["9", "12", "15", "18"], correct: "12" },
+  { question: "A train 120 meters long passes a pole in 6 seconds. What is its speed?", answers: ["20 m/s", "25 m/s", "15 m/s", "18 m/s"], correct: "20 m/s" },
+  { question: "If A = 2, B = 4, C = 8, then what is the value of Z (26th letter)?", answers: ["64", "128", "512", "1024"], correct: "512" },
+  { question: "Find the missing number: 2, 6, 12, 20, ?", answers: ["30", "28", "32", "36"], correct: "30" },
+  
+    
 ];
 
 // Animation utility functions
@@ -173,7 +183,7 @@ function updateGame(snapshot) {
             document.getElementById("question-timer-container").style.display = "none";
             setTimeout(() => {
                 nextQuestion();
-            }, 1000); // 1 second delay before new question
+            }, 1500); // 1 second delay before new question
         } else if (isIdle) {
             setTimeout(nextQuestion, 1500);
         }

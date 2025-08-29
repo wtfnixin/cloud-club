@@ -1,4 +1,3 @@
-/* Login Card Modal Styles */
 #loginCardModal {
     position: fixed;
     top: 0;
@@ -27,14 +26,12 @@
     z-index: 1001;
 }
 
-/* Ensure login card is properly centered */
 #loginCardModal .login-card {
     margin: 0;
     width: 100%;
     max-width: 450px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .login-card-modal {
         width: 95%;
