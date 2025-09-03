@@ -18,18 +18,152 @@ let drawAudio = new Audio("amongus.mp3");
 let gameId, playerSymbol, isSpectator = false;
 let questionTimer, moveTimer;
 let localTimerIsRunning = false;
+let usedQuestions = [];
 
 const questions = [
-    { question: "What is the capital of France?", answers: ["Berlin", "Madrid", "Paris"], correct: "Paris" },
-    { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Jupiter"], correct: "Mars" },
-    { question: "What is the output of: print(2 * '12') ?", answers: ["24", "1212", "Error", "12"], correct: "1212" },
-    { question: "Which of the following is immutable in Python?", answers: ["List", "Tuple", "Dictionary", "Set"], correct: "Tuple" },
-    { question: "What is the output of: print(5 // 2) ?", answers: ["2.5", "3", "2", "Error"], correct: "2" },
-    { question: "Which keyword in Python is used to handle exceptions?", answers: ["error", "except", "throw", "handle"], correct: "except" },
-    { question: "If 3 pens cost ₹45, how many pens can be bought for ₹180?", answers: ["9", "12", "15", "18"], correct: "12" },
-  { question: "A train 120 meters long passes a pole in 6 seconds. What is its speed?", answers: ["20 m/s", "25 m/s", "15 m/s", "18 m/s"], correct: "20 m/s" },
-  { question: "If A = 2, B = 4, C = 8, then what is the value of Z (26th letter)?", answers: ["64", "128", "512", "1024"], correct: "512" },
-  { question: "Find the missing number: 2, 6, 12, 20, ?", answers: ["30", "28", "32", "36"], correct: "30" },
+    { question: "What's the output: print([] or 'default')?", answers: ["[]", "default", "True", "False"], correct: "default" },{ question: "TCP handshake requires how many steps?", answers: ["2", "3", "4", "5"], correct: "3" },
+  
+  { question: "In binary: 1101 XOR 1011 = ?", answers: ["0110", "1110", "0010", "1100"], correct: "0110" },
+  
+  { question: "Which sorting has worst-case O(n²) but best average?", answers: ["Merge Sort", "Quick Sort", "Heap Sort", "Bubble Sort"], correct: "Quick Sort" },
+  
+  { question: "In subnet /26, how many host bits?", answers: ["4", "5", "6", "8"], correct: "6" },
+  
+  { question: "What's print(0.1 + 0.2 == 0.3) in most languages?", answers: ["True", "False", "Error", "0.3"], correct: "False" },
+  
+  { question: "Which HTTP status means 'Resource not found'?", answers: ["400", "401", "403", "404"], correct: "404" },
+  
+  { question: "In SQL: SELECT COUNT(DISTINCT NULL). Result?", answers: ["0", "1", "NULL", "Error"], correct: "0" },  { question: "In Python: print([] == False)", answers: ["True", "False", "Error", "[]"], correct: "False" },
+  
+  { question: "Which protocol uses port 22?", answers: ["HTTP", "SSH", "Telnet", "FTP"], correct: "SSH" },
+  
+  { question: "Hexadecimal FF in decimal?", answers: ["255", "256", "254", "15"], correct: "255" }, 
+
+  { question: "Which data structure for implementing recursion?", answers: ["Queue", "Stack", "Array", "Tree"], correct: "Stack" },
+  
+  { question: "In C: int *p, q; What is q?", answers: ["Pointer to int", "Integer", "Pointer to pointer", "Array"], correct: "Integer" },
+    
+  { question: "What's print(type(type(int)))?", answers: ["<class 'int'>", "<class 'type'>", "<class 'object'>", "Error"], correct: "<class 'type'>" },
+  
+  { question: "Which has constant amortized insertion time?", answers: ["Array", "Linked List", "Dynamic Array", "Stack"], correct: "Dynamic Array" },
+  
+  { question: "In IPv6, how many bits for address?", answers: ["64", "96", "128", "256"], correct: "128" },
+  
+  { question: "What's the output: print(3 in [1,2,3] and 4)?", answers: ["True", "False", "4", "Error"], correct: "4" },
+  
+  { question: "Which tree traversal gives sorted order in BST?", answers: ["Preorder", "Inorder", "Postorder", "Level order"], correct: "Inorder" },
+  
+  { question: "In Git, what does HEAD~2 mean?", answers: ["2nd commit", "2 commits back", "2nd branch", "2 files back"], correct: "2 commits back" },
+  
+  { question: "What's malloc(0) behavior in C?", answers: ["Returns NULL", "Implementation defined", "Segmentation fault", "Returns valid pointer"], correct: "Implementation defined" },
+
+  { question: "What's the output: console.log(0.1 + 0.2)?", answers: ["0.3", "0.30000000000000004", "Error", "0.299999999999"], correct: "0.30000000000000004" },
+  
+  { question: "Which consistency model is strongest?", answers: ["Eventual", "Causal", "Sequential", "Linearizability"], correct: "Linearizability" },
+
+    { question: "In Python: print(bool('False'))", answers: ["True", "False", "Error", "'False'"], correct: "True" },
+
+    { question: "Which HTTP method is idempotent?", answers: ["POST", "GET", "PATCH", "CONNECT"], correct: "GET" },
+
+    { question: "In binary: 1011 AND 1101 = ?", answers: ["1001", "1111", "0101", "0011"], correct: "1001" },
+
+    { question: "If 2^x + 2^x = 2^(x+1), then x can be?", answers: ["Any real number", "Only positive", "Only integers", "Only 0"], correct: "Any real number" },
+  
+  { question: "Three cards: RR, BB, RB. You see red. P(other side red)?", answers: ["1/3", "1/2", "2/3", "3/4"], correct: "2/3" },
+  
+  { question: "If log_a b = 2 and log_b c = 3, then log_a c = ?", answers: ["5", "6", "8", "9"], correct: "6" },
+      
+  { question: "A clock gains 5 minutes every hour. After 12 hours, it shows 3:00. Actual time?", answers: ["2:00", "1:00", "4:00", "2:30"], correct: "2:00" },
+  
+  { question: "If x! = 120, then (x-1)! + x! = ?", answers: ["144", "145", "143", "142"], correct: "144" },
+    
+  { question: "If 3^x = 81, then 9^(x/2) = ?", answers: ["9", "27", "81", "3"], correct: "9" },
+  
+  { question: "Two dices. P(sum ≥ 10) = ?", answers: ["1/6", "1/4", "1/3", "1/12"], correct: "1/6" },
+  
+  { question: "If sin²θ + cos²θ = 1, then sin⁴θ + cos⁴θ = ?", answers: ["1", "1 - 2sin²θcos²θ", "2sin²θcos²θ", "sin²θ + cos²θ"], correct: "1 - 2sin²θcos²θ" },
+  
+  { question: "A sequence: 1, 1, 2, 3, 5, 8, ?. What's the pattern?", answers: ["Fibonacci", "Prime numbers", "Perfect squares", "Arithmetic"], correct: "Fibonacci" },
+  
+  { question: "If |x - 3| = 5, possible values of x?", answers: ["8 only", "-2 only", "8 or -2", "3 or 5"], correct: "8 or -2" },
+  
+  { question: "lim(x→0) sin(x)/x = ?", answers: ["0", "1", "∞", "Undefined"], correct: "1" },
+  
+  { question: "If logₐ x = 2 and logₐ y = 3, then logₐ(x²y) = ?", answers: ["5", "6", "7", "12"], correct: "7" },
+  
+  { question: "Complex number i⁴ = ?", answers: ["1", "-1", "i", "-i"], correct: "1" },
+  
+  { question: "If P(A) = 0.6, P(B) = 0.4, P(A∩B) = 0.2, then P(A∪B) = ?", answers: ["0.8", "0.6", "1.0", "0.4"], correct: "0.8" },
+  
+  { question: "Derivative of x^x = ?", answers: ["x^(x-1)", "x^x(1 + ln x)", "x^x ln x", "xx^(x-1)"], correct: "x^x(1 + ln x)" },
+  
+  { question: "If det(A) = 5 and det(B) = 3, then det(AB) = ?", answers: ["8", "15", "2", "5/3"], correct: "15" },
+  
+  { question: "Series: 2, 8, 18, 32, 50, ?", answers: ["70", "72", "74", "68"], correct: "72" },
+  
+  { question: "If z = 3 + 4i, then |z| = ?", answers: ["3", "4", "5", "7"], correct: "5" },
+
+    { question: "If f(x) = |x|, is f differentiable at x = 0?", answers: ["Yes", "No", "Only left derivative", "Only right derivative"], correct: "No" },
+  
+  { question: "Poisson distribution parameter λ represents?", answers: ["Variance", "Mean", "Both mean and variance", "Standard deviation"], correct: "Both mean and variance" },
+  
+  { question: "If A and B are independent, then P(A|B) = ?", answers: ["P(A)", "P(B)", "P(A∩B)", "1"], correct: "P(A)" },
+  
+  { question: "Curl of conservative vector field is?", answers: ["Zero", "One", "Field dependent", "Undefined"], correct: "Zero" },
+  
+  { question: "If z₁ = 1+i and z₂ = 1-i, then z₁z₂ = ?", answers: ["0", "2", "2i", "1"], correct: "2" },
+
+  { question: "A man lives on 20th floor. He uses elevator to go down but walks up except on rainy days. Why?", answers: ["Exercise", "He's too short to reach button", "Elevator is broken", "Saves electricity"], correct: "He's too short to reach button" },
+  
+  { question: "What comes next: J, F, M, A, M, J, ?", answers: ["J", "A", "S", "O"], correct: "J" },
+  
+  { question: "If you're in a dark room with candle, oil lamp, gas stove and only one match, what do you light first?", answers: ["Candle", "Oil lamp", "Gas stove", "The match"], correct: "The match" },
+  
+  { question: "A rooster lays an egg on roof peak. Which side does it roll?", answers: ["Left", "Right", "Stays on peak", "Roosters don't lay eggs"], correct: "Roosters don't lay eggs" },
+  
+  { question: "You have 12 balls, one is heavier. Minimum weighings to find it?", answers: ["2", "3", "4", "5"], correct: "3" },
+  
+  { question: "What's heavier: a ton of feathers or a ton of bricks?", answers: ["Feathers", "Bricks", "Same weight", "Depends on gravity"], correct: "Same weight" },
+  
+  { question: "If plane crashes on border of two countries, where do you bury survivors?", answers: ["Country A", "Country B", "International waters", "Don't bury survivors"], correct: "Don't bury survivors" },
+  
+  { question: "How many months have 28 days?", answers: ["1", "2", "11", "12"], correct: "12" },
+  
+  { question: "Electric train travels north. Wind blows south. Which way does smoke go?", answers: ["North", "South", "Up", "Electric trains don't produce smoke"], correct: "Electric trains don't produce smoke" },
+  
+  { question: "What can travel around world while staying in corner?", answers: ["Light", "Sound", "Stamp", "Wind"], correct: "Stamp" },
+  
+  { question: "If doctor gives you 3 pills to take every 30 minutes, how long will they last?", answers: ["90 minutes", "60 minutes", "120 minutes", "30 minutes"], correct: "60 minutes" },
+  
+  { question: "What gets wetter the more it dries?", answers: ["Sponge", "Towel", "Paper", "Cloth"], correct: "Towel" },
+  
+  { question: "Before Mount Everest was discovered, what was the tallest mountain?", answers: ["K2", "Kangchenjunga", "Mount Everest", "Lhotse"], correct: "Mount Everest" },
+  
+  { question: "How many times can you subtract 10 from 100?", answers: ["10", "9", "1", "Infinite"], correct: "1" },
+  
+  { question: "What goes up but never comes down?", answers: ["Balloon", "Age", "Temperature", "Airplane"], correct: "Age" },
+  
+  { question: "If you drop a yellow hat in Red Sea, what does it become?", answers: ["Red hat", "Wet", "Lost", "Orange hat"], correct: "Wet" },
+  
+  { question: "What has hands but cannot clap?", answers: ["Statue", "Clock", "Mannequin", "Robot"], correct: "Clock" },
+  
+  { question: "How many sides does a circle have?", answers: ["0", "1", "2", "Infinite"], correct: "2" },
+  
+  { question: "What breaks but never falls?", answers: ["Glass", "Day", "Promise", "Wave"], correct: "Day" },
+  
+  { question: "If son is half his father's age, and father is 40, when will son be 3/4 father's age?", answers: ["Never", "In 20 years", "In 10 years", "Now"], correct: "Never" },
+  
+  { question: "What has keys but no locks, space but no room?", answers: ["House", "Car", "Keyboard", "Piano"], correct: "Keyboard" },
+
+  { question: "If it takes 5 machines 5 minutes to make 5 widgets, how long for 100 machines to make 100 widgets?", answers: ["100 minutes", "20 minutes", "5 minutes", "1 minute"], correct: "5 minutes" },
+  
+  { question: "What has one eye but cannot see?", answers: ["Blind person", "Needle", "Cyclops", "Camera"], correct: "Needle" },
+  
+  { question: "If you have it, you want to share it. If you share it, you don't have it. What is it?", answers: ["Money", "Secret", "Food", "Love"], correct: "Secret" },
+  
+  
+
+
   
     
 ];
@@ -300,7 +434,7 @@ function startQuestionTimer() {
     const timerDisplay = document.getElementById("question-time");
     document.getElementById("question-timer-container").style.display = "block";
     
-    let timeLeft = 10;
+    let timeLeft = 60;
     timerDisplay.innerText = timeLeft;
     
     questionTimer = setInterval(() => {
@@ -338,7 +472,26 @@ function startMoveTimer() {
 
 function nextQuestion() {
     if (playerSymbol === 'X') {
-        const questionIndex = Math.floor(Math.random() * questions.length);
+        // If all questions have been used, reset the used questions list
+        if (usedQuestions.length >= questions.length) {
+            usedQuestions = [];
+        }
+
+        // Get available question indices (not used yet)
+        const availableIndices = [];
+        for (let i = 0; i < questions.length; i++) {
+            if (!usedQuestions.includes(i)) {
+                availableIndices.push(i);
+            }
+        }
+
+        // Select a random question from available ones
+        const randomIndex = Math.floor(Math.random() * availableIndices.length);
+        const questionIndex = availableIndices[randomIndex];
+
+        // Mark this question as used
+        usedQuestions.push(questionIndex);
+
         database.ref('games/' + gameId).update({
             question: questions[questionIndex],
             turn: "",

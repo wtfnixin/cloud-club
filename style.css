@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+html {
+  overflow: hidden;
+}
+
 body {
   background:  radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139, 92, 246, 0.25), transparent 70%),
                  radial-gradient(125% 125% at 50% 10%, #000000 40%, #010133 100%),
@@ -96,11 +100,12 @@ nav ul {
   gap: 60px;
   min-height: calc(100vh - 120px);
   padding: 20px;
-  margin-top: 80px;
+  margin-top: 60px;
   flex-wrap: wrap;
   width: 100%;
   box-sizing: border-box;
-  margin: 15px 18%;
+  margin: 15px 10%;
+  overflow: hidden;
 }
 
 .tic-tac-toe-container {
@@ -223,7 +228,7 @@ nav ul {
 .gameInfo {
   padding: 20px;
   max-height: calc(100vh - 120px);
-  overflow-y: auto;
+  overflow-y: hidden  ;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -231,6 +236,7 @@ nav ul {
   min-width: 300px;
   text-align: center;
   max-width: 28%;
+  margin-top: -40px;
 }
 .gameInfo div span {
   padding-bottom: 20px;
@@ -432,6 +438,7 @@ nav ul {
 
 #question-timer-container, #move-timer-container {
   margin-top: 15px;
+  margin-bottom: 30px;
   font-size: 1.5vw;
   font-family: 'Orbitron', 'Courier New', monospace;
   font-weight: bold;
@@ -612,18 +619,7 @@ nav ul {
   color: #7f8c8d;
 }
 
-#quiz-container {
-  margin-top: 10px;
-  padding: 12px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  text-align: center;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-  max-height: 300px;
-  overflow-y: auto;
-}
+
 
 #startGameBtn {
   width: 120px;
